@@ -1,11 +1,15 @@
 import os
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-api_key = os.getenv("DEEPSEEK_API_KEY", "sk-83241d57cc334cd19a4b817b9a68c511")
+# 加载环境变量
+load_dotenv()
+
+api_key = os.getenv("DEEPSEEK_API_KEY")
 if not api_key:
-    raise ValueError("DEEPSEEK_API_KEY is not set")
+    raise ValueError("DEEPSEEK_API_KEY 环境变量未设置，请在 .env 文件中配置")
 
 llm = ChatOpenAI(model="deepseek-chat", api_key=api_key, temperature=0.2, base_url="https://api.deepseek.com")
 

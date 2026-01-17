@@ -1,13 +1,17 @@
 import json
 import os
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
+# 加载环境变量
+load_dotenv()
+
 # 安全地获取 API key
-api_key = os.getenv("DEEPSEEK_API_KEY","sk-83241d57cc334cd19a4b817b9a68c511")
+api_key = os.getenv("DEEPSEEK_API_KEY")
 if not api_key:
-    raise ValueError("DEEPSEEK_API_KEY 环境变量未设置")
+    raise ValueError("DEEPSEEK_API_KEY 环境变量未设置，请在 .env 文件中配置")
 
 # 可选：base_url 也从环境变量读取
 BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
