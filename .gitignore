@@ -1,0 +1,28 @@
+# 环境变量文件
+.env
+
+# Python 相关
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# RAG 向量库
+chroma_db/
+
+# 测试文件
+test_docs/
+test_knowledge/
+uploads/

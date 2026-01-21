@@ -16,30 +16,31 @@ if not api_key:
 # 可选：base_url 也从环境变量读取
 BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 
-class RouterAgent:
+class PlannerAgent:
     # 添加常量
-    MAX_INPUT_LENGTH = 1000
-    VALID_AGENTS = ['review', 'interview', 'chat', 'resume_estimate', 'resume_generate', 'illegal_input']
+    MAX_INPUT_LENGTH = 200
+    VALID_AGENTS = ['review', 'interview', 'chat', 'resume_estimate', 'resume_generate','illegal_input']
     
     def __init__(self):
         self.llm = ChatOpenAI(
             model="deepseek-chat", 
             api_key=api_key, 
             temperature=0, 
-            base_url=BASE_URL
+            base_url=BASE_URL,
         )
         self.template = ChatPromptTemplate.from_messages([
-            ("system", """你是路由器，负责将用户输入分发给合适的代理。 
+            ("system", """你是规划师，负责将用户输入分发给合适的代理。 
             你会收到一个用户输入，你需要决定哪个代理或哪几个代理来协同处理这个请求。
             业务范围：仅限参与关于【日常聊天（你看不懂的那种大概率不属于这个范围）、知识复习、简历生成、面试辅导】的对话。
-            你会分配以下代理来处理用户输入：review, interview, chat, resume_estimate, resume_generate, illegal_input
+            你会分配以下代理来处理用户输入：review, interview, chat, resume_estimate, resume_generate,illegal_input
             review: 负责复习知识
             interview: 负责面试
             chat: 负责聊天
             resume_estimate: 负责简历评估
             resume_generate: 负责简历生成
             illegal_input: 负责处理非法输入
-            你需要返回代理的名称或名称列表。如果需要多个代理协同处理，请返回名称列表。
+            你需要返回代理的名称或名称列表。如果需要多个代理协同处理，请返回名称列表
+            agent的调用数量和先后顺序取决于你对用户输入的理解。
             请只返回代理的名称或名称列表，不要返回其他文本。
             格式应该像这样：{{"agents": ["review"]}} 或 {{"agents": ["review", "interview"]}}
             """),

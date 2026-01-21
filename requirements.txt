@@ -1,4 +1,17 @@
 langchain
 langchain-openai
 langchain-core
+langchain-community
 python-dotenv
+
+# 文件处理依赖
+PyMuPDF
+python-docx
+python-pptx
+
+# RAG 依赖（可选，使用 vector_db_manager.py 时需要）
+chromadb
+sentence-transformers
+
+# 高级文档处理（可选，use_unstructured=True 时需要）
+unstructured
